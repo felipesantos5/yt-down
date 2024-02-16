@@ -14,9 +14,11 @@ app.post("/download", async (req, res) => {
   try {
     const { videoUrl } = req.body;
     const videoInfo = await ytdl.getInfo(videoUrl);
+    const info = ytdl.downloadFromInfo(videoUrl);
     const audioFormats = ytdl.filterFormats(videoInfo.formats, "audioandvideo");
     console.log(audioFormats);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
